@@ -1,11 +1,11 @@
 const { $ } = require('@wdio/globals')
-const Page = require('./page');
 const Gmail = require('../gmail/gmail-api.js');
+const { isNoSubstitutionTemplateLiteral } = require('typescript');
 
 /**
  * sub page containing specific selectors and methods for a specific page
  */
-class LoginPage extends Page {
+class RegisterPage{
     /**
      * define selectors using getter methods
      */
@@ -41,24 +41,50 @@ class LoginPage extends Page {
         return $('//div[@data-testid="channel-email"]');
     }
 
+    get errorMessage () {
+        return $('//div[@class="TextInput__HelperTextWrapper-jfrtn4-4 fJvDzr"]/p');
+    }
+
+    get profileName () {
+        return $('//p/span[@class="Header__ProfileName-ecyz7w-8 jpBQpC"]');
+    }
+
     
     /**
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async login (fullName, username) {
+    async register (fullName, username,password,passwordConfirmation) {
         await this.btnCardIndividu.click();
         await this.inputFullname.setValue(fullName);
         await this.inputUsername.setValue(username);
-        await this.inputPassword.setValue("dfbsdf42369%*D");
-        await this.inputPasswordConfirmation.setValue("dfbsdf42369%*D");
+        if (await this.inputPassword.isExisting()){
+            await this.inputPassword.setValue(password);
+        }
+        if (await this.inputPasswordConfirmation.isExisting()){
+            await this.inputPasswordConfirmation.setValue(passwordConfirmation);
+        }
         await this.checkboxAgreement.click();
-        await this.btnSubmit.click();
+        if(await this.btnSubmit.isEnabled()){
+            await this.btnSubmit.click();
+        }
+    }
+
+    async registerOTP () {
         await this.btnChannelEmail.click();
-        await browser.pause(1000)
-        const otpMessage = await Gmail.retrieveOtp();
-        const otp = otpMessage.match(/(\d+)/);
-        console.log("otpAKUBERAPAPAPPAP ",otp[0])
+        await browser.pause(7000);
+        // const otpMessage = await Gmail.retrieveOtp();
+        // const otp = otpMessage.match(/(\d+)/);
+        // console.log("MyOTP ",otp[0])
+        const str = "123456"
+        var optArr = str.split("")
+        for (let i = 0; i < optArr.length; i++) {
+            const num = i+1;
+            const num2Str = num.toString(); 
+		    const elem = await $(`input[data-testid='otp-input-${num2Str}']`)
+            await elem.setValue(optArr[i])
+            await browser.pause(1000)
+	  }
     }
 
     /**
@@ -66,4 +92,4 @@ class LoginPage extends Page {
      */
 }
 
-module.exports = new LoginPage();
+module.exports = new RegisterPage();

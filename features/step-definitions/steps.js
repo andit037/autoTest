@@ -1,30 +1,42 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 const { expect, $ } = require('@wdio/globals')
 
-const LoginPage = require('../pageobjects/login.page');
-// const SecurePage = require('./pageobjects/secure.page');
+const RegisterPage = require('../pageobjects/register.page');
 
 
-const pages = {
-    login: LoginPage
-}
 
-Given(/^I am on the login page$/, async() => {
+Given(/^I am on the register page$/, async() => {
 	await browser.url(`https://www.ralali.com/signup`)
 });
 
-When(/^I login with (\w+) and (.+)$/, async (username, password) => {
-    await LoginPage.login(username, password)
+
+When(/^I register with (.*) and (.*) and (.*) and (.*)$/, async (fullName, username,password,passwordConfirmation) => {
+	await RegisterPage.register(fullName, username,password,passwordConfirmation)
 });
 
 
-When(/^I see OTP on my gmail$/, () => {
-	return true;
+When(/^I insert the OTP on register page$/, async() => {
+	await RegisterPage.registerOTP()
+    await browser.pause(2000);
 });
 
 
-Then(/^I should see a flash message saying (.*)$/, async (message) => {
-    await expect(SecurePage.flashAlert).toBeExisting();
-    await expect(SecurePage.flashAlert).toHaveTextContaining(message);
+
+Then(/^I see my profile (.*) on the dashboard page$/, async(fullName) => {
+	if (await RegisterPage.profileName.isExisting()){
+	    await expect(RegisterPage.profileName).toBeExisting();
+        await expect(RegisterPage.profileName).toHaveText(fullName);
+    }
 });
+
+
+
+
+Then(/^I see error message (.*)$/, async (error_message) => {
+    if (await RegisterPage.errorMessage.isExisting()){
+	    await expect(RegisterPage.errorMessage).toBeExisting();
+        await expect(RegisterPage.errorMessage).toHaveText(error_message);
+    }
+});
+
 
