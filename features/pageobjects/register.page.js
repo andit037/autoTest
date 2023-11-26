@@ -1,6 +1,5 @@
 const { $ } = require('@wdio/globals')
 const Gmail = require('../gmail/gmail-api.js');
-const { isNoSubstitutionTemplateLiteral } = require('typescript');
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -75,7 +74,8 @@ class RegisterPage{
         await browser.pause(7000);
         // const otpMessage = await Gmail.retrieveOtp();
         // const otp = otpMessage.match(/(\d+)/);
-        // console.log("MyOTP ",otp[0])
+        // var optArr = otp[0].split("")
+        // console.log("MyOTP ",optArr)
         const str = "123456"
         var optArr = str.split("")
         for (let i = 0; i < optArr.length; i++) {
