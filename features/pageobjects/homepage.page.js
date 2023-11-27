@@ -47,11 +47,11 @@ class HomePage{
 
     async chooseProduct (productName) {
         await browser.pause(1000)
-        await browser.scroll(0, 400);
-        await this.products(productName).waitForDisplayed(5000);
+        await browser.scroll(0, 300);
+        await this.products(productName).waitForDisplayed(8000);
         await this.products(productName).click();
-        await this.beliSekarangButton.waitForDisplayed(5000);
-        (await this.beliSekarangButton).click();
+        await this.beliSekarangButton.waitForDisplayed(8000);
+        await this.beliSekarangButton.click();
     }
 
     async clickAddProduct (totalProduct) {

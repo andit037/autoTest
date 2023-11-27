@@ -12,4 +12,4 @@ Feature: The Internet Ralali Website
     Examples: 
       | username                          | password | fullname | category_filter         | product_name                                                | total | total_products  |
       | bh.a.ra.th.k.all.adi38@gmail.com  | P@ssw0rd | Bagus    | Beauty, Sport & Fashion | LAMSON FACE MASK Masker Kesehatan Karet 3ply 1Box Isi 50pcs |    22 |       22 items  |
-      | s.e.rnav.il.lare.s@googlemail.com | P@ssw0rd | Dony     | Electronics             | Quantum Kompor Gas [1 Tungku]  101 RB-White                 |    23 |       23 barang |
+      | s.e.rnav.il.lare.s@googlemail.com | P@ssw0rd | Dony     | Electronics             | Quantum Kompor Gas [1 Tungku]  101 RB-White                 |    23 |       23 items  |

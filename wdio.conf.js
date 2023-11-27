@@ -263,7 +263,7 @@ exports.config = {
      * @param {object}                 context          Cucumber World object
      */
     afterScenario: async function (world, result, context) {
-        await browser.pause(1500)
+        await browser.pause(1000)
         await browser.deleteCookies()
     },
     /**
